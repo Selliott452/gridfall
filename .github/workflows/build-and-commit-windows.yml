@@ -1,6 +1,9 @@
 name: Build and commit Windows EXE
 
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 permissions:

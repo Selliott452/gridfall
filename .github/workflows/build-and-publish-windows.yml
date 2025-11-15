@@ -1,6 +1,9 @@
 name: Build and publish Web build
 
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 permissions:
