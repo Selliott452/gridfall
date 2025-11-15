@@ -1,0 +1,52 @@
+name: Build and publish Web build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  export-web:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create timestamped folder
+        id: stamp
+        run: |
+          ts=$(date +"%Y-%m-%d_%H-%M-%S")
+          echo "timestamp=$ts" >> $GITHUB_OUTPUT
+          mkdir -p builds/web/$ts
+
+      - name: Export Web build with Godot
+        uses: firebelley/godot-export@v7.0.0
+        with:
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_export_templates.tpz
+          relative_project_path: ./
+          presets_to_export: Web
+          relative_export_path: builds/web/${{ steps.stamp.outputs.timestamp }}
+
+          cache: true
+
+      - name: Prepare docs folder for GitHub Pages
+        run: |
+          # Clear old web build
+          rm -rf docs
+          mkdir -p docs
+
+          # Copy the newly exported web build into docs
+          cp -r builds/web/${{ steps.stamp.outputs.timestamp }}/* docs/
+
+      - name: Commit and push web build
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add docs/
+
+          git commit -m "CI: update Web build for GitHub Pages"
+          git push
