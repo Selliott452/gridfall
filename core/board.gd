@@ -18,6 +18,8 @@ enum TurnState { PLAYER, ENEMY }
 var current_turn: TurnState = TurnState.PLAYER
 var player_action_used: bool = false
 
+@onready var card_row: HBoxContainer = $UI/RootUI/CardBar/CardRow
+
 var strike_card: CardAction = preload("res://data/cards/Strike.tres")
 var move_card: MoveCardAction = preload("res://data/cards/Move.tres")
 
@@ -52,6 +54,8 @@ func _ready() -> void:
 	active_card_index = 0
 	print("Hand Registered")
 	print_hand()
+	
+	refresh_card_ui()
 	
 	queue_redraw()
 
@@ -218,6 +222,34 @@ func set_active_card_slot(index: int) -> void:
 	active_card_index = index
 	print("Selected card slot: ", index, " -> ", hand[index].name)
 	print_hand()
+	refresh_card_ui()
+
+func clear_card_row() -> void:
+	for child in card_row.get_children():
+		child.queue_free()
+		
+func refresh_card_ui() -> void:
+	clear_card_row()
+	
+	for i in range(hand.size()):
+		var card: CardAction = hand[i]
+		var button := Button.new()
+		button.text = "%d: %s" % [i + 1, card.name]
+		
+		# Highlight active card
+		if i == active_card_index:
+			button.add_theme_color_override("font_color", Color(1, 1, 0))
+			button.add_theme_color_override("font_color_hover", Color(1, 1, 0))
+		else:
+			button.add_theme_color_override("font_color", Color(1, 1, 1))
+			
+		var idx := i
+		button.pressed.connect(
+			func():
+				set_active_card_slot(idx)
+		)
+		
+		card_row.add_child(button)
 
 func end_player_turn() -> void:
 	current_turn = TurnState.ENEMY

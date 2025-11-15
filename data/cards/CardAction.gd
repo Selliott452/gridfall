@@ -12,7 +12,7 @@ class_name CardAction
 func play(board: Node, caster: Unit, target_cell: Vector2i) -> void:
 	# Assume it's an attack card and use the board logic
 	if not board.can_attack_tile(caster, target_cell):
-		print(name, " cannot be player on ", target_cell)
+		print(name, " cannot be played on ", target_cell)
 		return
 	
 	print("Playing card: ", name, " on ", target_cell)
