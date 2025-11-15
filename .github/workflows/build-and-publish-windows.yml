@@ -39,7 +39,7 @@ jobs:
           mkdir -p docs
 
           # Copy the newly exported web build into docs
-          cp -r builds/web/${{ steps.stamp.outputs.timestamp }}/* docs/
+          cp -r builds/web/${{ steps.stamp.outputs.timestamp }}/Web/* docs/
 
       - name: Commit and push web build
         run: |
