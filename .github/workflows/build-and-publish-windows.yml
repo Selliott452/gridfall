@@ -37,6 +37,9 @@ jobs:
 
       - name: Prepare docs folder for GitHub Pages
         run: |
+          git fetch origin
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          
           # Clear old web build
           rm -rf docs
           mkdir -p docs
@@ -48,9 +51,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git fetch origin
-          git pull --rebase origin "${GITHUB_REF_NAME}"
 
           git add docs/
 
