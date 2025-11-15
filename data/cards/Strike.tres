@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c2mdxtqvdnqd0"]
+
+[ext_resource type="Script" uid="uid://bfk3f1fv02h5p" path="res://data/cards/CardAction.gd" id="1_4rcyi"]
+
+[resource]
+script = ExtResource("1_4rcyi")
+name = "Strike"
+description = "Deal damage to a unit in range 1."
+metadata/_custom_type_script = "uid://bfk3f1fv02h5p"

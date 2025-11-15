@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MoveCardAction" load_steps=2 format=3 uid="uid://busj3pf1vonri"]
+
+[ext_resource type="Script" uid="uid://djguan4xbxwk1" path="res://data/cards/MoveCardAction.gd" id="1_8m1uw"]
+
+[resource]
+script = ExtResource("1_8m1uw")
+name = "Move"
+description = "Move up to 2 tiles."
+range = 2
+metadata/_custom_type_script = "uid://djguan4xbxwk1"

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://lb8fwt885h73"]
+
+[ext_resource type="Script" uid="uid://tw14dkdvk2qq" path="res://core/board.gd" id="1_qails"]
+[ext_resource type="PackedScene" uid="uid://qenklnmbwgnv" path="res://scenes/Player.tscn" id="2_66b1s"]
+[ext_resource type="PackedScene" uid="uid://cs0ni2jt14h8y" path="res://scenes/Enemy.tscn" id="3_w6jgk"]
+
+[node name="Board" type="Node2D"]
+script = ExtResource("1_qails")
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="Player" parent="Units" instance=ExtResource("2_66b1s")]
+
+[node name="Enemy" parent="Units" instance=ExtResource("3_w6jgk")]
