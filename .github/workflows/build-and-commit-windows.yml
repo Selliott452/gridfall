@@ -1,0 +1,44 @@
+name: Build and commit Windows EXE
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  export-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create timestamped build folder
+        id: stamp
+        run: |
+          ts=$(date +"%Y-%m-%d_%H-%M-%S")
+          echo "timestamp=$ts" >> $GITHUB_OUTPUT
+          mkdir -p builds/$ts
+
+      - name: Export game with Godot
+        uses: firebelley/godot-export@v7.0.0
+        with:
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.5.1/Godot_v4.5.1-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.5.1/Godot_v4.5.1-stable_export_templates.tpz
+
+          relative_project_path: ./
+          presets_to_export: "Windows Desktop"
+          relative_export_path: builds/${{ steps.stamp.outputs.timestamp }}
+
+          cache: true
+
+      - name: Commit and push build
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add builds/
+
+          git commit -m "CI: build created at ${{ steps.stamp.outputs.timestamp }}"
+          git push
