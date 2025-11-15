@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Create timestamped folder
         id: stamp
@@ -39,9 +37,6 @@ jobs:
 
       - name: Prepare docs folder for GitHub Pages
         run: |
-          git fetch origin
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          
           # Clear old web build
           rm -rf docs
           mkdir -p docs
