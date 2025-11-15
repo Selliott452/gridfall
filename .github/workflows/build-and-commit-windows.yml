@@ -1,9 +1,6 @@
 name: Build and commit Windows EXE
 
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
 
 permissions:
@@ -16,8 +13,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Create timestamped build folder
         id: stamp
@@ -42,9 +37,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git fetch origin
-          git pull --rebase origin "${GITHUB_REF_NAME}"
 
           git add builds/
 
