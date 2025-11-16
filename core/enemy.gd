@@ -20,7 +20,7 @@ func take_turn(board) -> void:
 	#If in range, attack
 	if distance <= attack_range:
 		print(name, " attacks Player!")
-		player.take_damage(attack_damage)
+		board.combat.attack_tile(self, player.grid_position)
 		
 		# Update HUD
 		board.hud.update(

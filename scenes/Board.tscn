@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://lb8fwt885h73"]
+[gd_scene load_steps=20 format=3 uid="uid://lb8fwt885h73"]
 
 [ext_resource type="Script" uid="uid://tw14dkdvk2qq" path="res://core/board.gd" id="1_qails"]
+[ext_resource type="PackedScene" uid="uid://b8fsl4xhis8fe" path="res://ui/DamagePopup.tscn" id="2_25pyh"]
 [ext_resource type="PackedScene" uid="uid://qenklnmbwgnv" path="res://scenes/Player.tscn" id="2_66b1s"]
 [ext_resource type="PackedScene" uid="uid://cs0ni2jt14h8y" path="res://scenes/Enemy.tscn" id="3_w6jgk"]
 [ext_resource type="Script" uid="uid://dlcdd50ew8eg" path="res://scenes/Hud.gd" id="4_w6jgk"]
@@ -33,6 +34,8 @@ bg_color = Color(0.9019608, 0.7882353, 0.23137255, 1)
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_qails")
+damage_popup_scene = ExtResource("2_25pyh")
+level_index = null
 
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource("6_wlyqt")

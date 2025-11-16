@@ -1,6 +1,8 @@
 extends Node2D
 class_name Board
 
+@export var damage_popup_scene: PackedScene
+
 @onready var hud: Hud = $UI/RootUI/TopBar
 
 @onready var grid: Grid = $Grid
@@ -190,3 +192,12 @@ func update_tile_highlighting() -> void:
 		_:
 			# Other card types: no highlight for now
 			grid.clear_highlight_cells()
+			
+func show_damage_popup(amount: int, world_position: Vector2, is_heal: bool = false) -> void:
+	if damage_popup_scene == null:
+		return
+		
+	var popup := damage_popup_scene.instantiate() as DamagePopup
+	add_child(popup)
+	popup.position = world_position + Vector2(0, -10)
+	popup.show_value(amount, is_heal)

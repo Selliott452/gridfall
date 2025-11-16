@@ -38,7 +38,9 @@ func attack_tile(attacker: Unit, target_cell: Vector2i) -> void:
 		
 	print(attacker.name, " attacks ", target_unit.name)
 		
-	target_unit.take_damage(attacker.attack_damage)
+	var damage = attacker.attack_damage
+	target_unit.take_damage(damage)
+	board.show_damage_popup(damage, target_unit.position, false)
 	board.hud.update(
 		board.player,
 		board.enemy,
