@@ -81,6 +81,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	
 	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_SPACE:
+			hud.end_turn_pressed.emit()
+			return
+			
 		var key_event := event as InputEventKey
 		card_system.handle_number_key(key_event.keycode)
 		return
