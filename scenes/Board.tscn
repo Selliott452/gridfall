@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://lb8fwt885h73"]
+[gd_scene load_steps=19 format=3 uid="uid://lb8fwt885h73"]
 
 [ext_resource type="Script" uid="uid://tw14dkdvk2qq" path="res://core/board.gd" id="1_qails"]
 [ext_resource type="PackedScene" uid="uid://qenklnmbwgnv" path="res://scenes/Player.tscn" id="2_66b1s"]
@@ -12,6 +12,24 @@
 [ext_resource type="Script" uid="uid://bf2d4ndkatinj" path="res://core/CombatSystem.gd" id="9_gc1oq"]
 [ext_resource type="Script" uid="uid://nblnxihdasp" path="res://core/CardSystem.gd" id="10_338j4"]
 [ext_resource type="Script" uid="uid://d3k73e6n6w3ee" path="res://core/MovementSystem.gd" id="10_w8n1y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_338j4"]
+bg_color = Color(0.1882353, 0.1882353, 0.1882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_25pyh"]
+bg_color = Color(0.8, 0.26666668, 0.26666668, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xxb6b"]
+bg_color = Color(0.1882353, 0.1882353, 0.1882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtc5n"]
+bg_color = Color(0.8, 0.26666668, 0.26666668, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_23q4v"]
+bg_color = Color(0.1882353, 0.1882353, 0.1882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s421v"]
+bg_color = Color(0.9019608, 0.7882353, 0.23137255, 1)
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_qails")
@@ -96,15 +114,89 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
 offset_right = -8.0
+theme_override_constants/separation = 30
 
-[node name="PlayerHPLabel" type="Label" parent="UI/RootUI/TopBar/TopRow"]
+[node name="PlayerHPBar" type="ProgressBar" parent="UI/RootUI/TopBar/TopRow"]
 layout_mode = 2
-text = "\"Player: 10/10\""
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_338j4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_25pyh")
+value = 100.0
+show_percentage = false
 
-[node name="EnemyHPLabel" type="Label" parent="UI/RootUI/TopBar/TopRow"]
+[node name="PlayerHPLabel" type="Label" parent="UI/RootUI/TopBar/TopRow/PlayerHPBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Player: 10/10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemyHPBar" type="ProgressBar" parent="UI/RootUI/TopBar/TopRow"]
 layout_mode = 2
-text = "\"Enemy: 5/5"
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_xxb6b")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qtc5n")
+value = 100.0
+show_percentage = false
+
+[node name="EnemyHPLabel" type="Label" parent="UI/RootUI/TopBar/TopRow/EnemyHPBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TurnLabel" type="Label" parent="UI/RootUI/TopBar/TopRow"]
 layout_mode = 2
 text = "Turn: Player"
+
+[node name="BottomRightUI" type="MarginContainer" parent="UI/RootUI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="BottomBar" type="HBoxContainer" parent="UI/RootUI/BottomRightUI"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="StaminaBar" type="ProgressBar" parent="UI/RootUI/BottomRightUI/BottomBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_23q4v")
+theme_override_styles/fill = SubResource("StyleBoxFlat_s421v")
+value = 100.0
+show_percentage = false
+
+[node name="StaminaLabel" type="Label" parent="UI/RootUI/BottomRightUI/BottomBar/StaminaBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Stamina: 3/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndTurnButton" type="Button" parent="UI/RootUI/BottomRightUI/BottomBar"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "End Turn"

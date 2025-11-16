@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1_8m1uw")
-name = "Move"
-description = "Move up to 2 tiles."
+name = "Dash"
+description = "Move up to 2 tiles in a straight line."
 range = 2
+damage = 0
 metadata/_custom_type_script = "uid://djguan4xbxwk1"

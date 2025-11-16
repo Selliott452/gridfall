@@ -10,7 +10,16 @@ class_name Grid
 var grid_origin: Vector2 = Vector2.ZERO
 var selected_cell: Vector2i = Vector2i(-1,-1)
 
+var highlighted_cells: Array[Vector2i] = []
+var highlighted_color: Color = Color(0, 0, 0, 0)
+
+var wall_cells: Array[Vector2i] = []
+
 func _ready() -> void:
+	_compute_grid_origin()
+	queue_redraw()
+
+func rebuild() -> void:
 	_compute_grid_origin()
 	queue_redraw()
 	
@@ -48,9 +57,25 @@ func is_in_bounds(cell: Vector2i) -> bool:
 		cell.x < grid_size.x and 
 		cell.y < grid_size.y
 	)
+
+func set_walls(cells: Array[Vector2i]) -> void:
+	wall_cells = cells.duplicate()
+	queue_redraw()
 	
+func is_wall(cell: Vector2i) -> bool:
+	return wall_cells.has(cell)
+
 func set_selected_cell(cell: Vector2i) -> void:
 	selected_cell = cell
+	queue_redraw()
+	
+func set_highlight_cells(cells: Array[Vector2i], color: Color) -> void:
+	highlighted_cells = cells.duplicate()
+	highlighted_color = color
+	queue_redraw()
+
+func clear_highlight_cells() -> void:
+	highlighted_cells.clear()
 	queue_redraw()
 	
 func _draw() -> void:
@@ -61,12 +86,23 @@ func _draw() -> void:
 			var top_left := cell_to_world(cell)
 			var rect := Rect2(top_left, tile_size)
 			
+			var base_color := Color(0.9,0.9,0.9,1.0)
+			if is_wall(cell):
+				base_color = Color(0.2, 0.2, 0.2, 1.0)
+			
 			#fill
-			draw_rect(rect, Color(0.9,0.9,0.9,1.0), true)
+			draw_rect(rect, base_color, true)
 			#border
 			draw_rect(rect, Color(0.7,0.7,0.7,1.0), false)
-			
-	if is_in_bounds(selected_cell):
+	
+	# Highlight all valid target cells
+	for cell in highlighted_cells:
+		if is_in_bounds(cell) and not is_wall(cell):
+			var top_left := cell_to_world(cell)
+			var rect := Rect2(top_left, tile_size)
+			draw_rect(rect, highlighted_color, true)
+	
+	if is_in_bounds(selected_cell) and not is_wall(selected_cell):
 		var top_left := cell_to_world(selected_cell)
 		var highlight_rect := Rect2(top_left, tile_size)
 		

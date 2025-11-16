@@ -23,7 +23,13 @@ func take_turn(board) -> void:
 		player.take_damage(attack_damage)
 		
 		# Update HUD
-		board.hud.update(player, board.enemy, board.turn_manager.current_turn)
+		board.hud.update(
+			player,
+			board.enemy,
+			board.turn_manager.current_turn,
+			board.turn_manager.current_stamina,
+			board.turn_manager.max_stamina
+			)
 		
 		return
 		

@@ -39,7 +39,13 @@ func attack_tile(attacker: Unit, target_cell: Vector2i) -> void:
 	print(attacker.name, " attacks ", target_unit.name)
 		
 	target_unit.take_damage(attacker.attack_damage)
-	board.hud.update(board.player, board.enemy, board.turn_manager.current_turn)
+	board.hud.update(
+		board.player,
+		board.enemy,
+		 board.turn_manager.current_turn,
+		 board.turn_manager.current_stamina,
+		 board.turn_manager.max_stamina
+		)
 		
 	# if the unit died and removed itself, clean up
 	if not is_instance_valid(target_unit) or not target_unit.is_inside_tree():
